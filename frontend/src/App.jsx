@@ -1,6 +1,6 @@
 import BookList from "./components/BookList/BookList";
 import BookForm from "./components/BookForm/BookForm";
-// import Filter from "./components/Filter/Filter";
+import Filter from "./components/Filter/Filter";
 import "./App.css";
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
                     <BookForm />
                 </section>
                 <section className="app-right-column">
-                    {/* <Filter /> */}
+                    <Filter />
                     <BookList />
                 </section>
             </main>

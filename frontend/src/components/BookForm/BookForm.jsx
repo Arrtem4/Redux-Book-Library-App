@@ -24,6 +24,7 @@ export default function BookForm() {
                 title,
                 author,
                 id: uuidv4(),
+                isFavorite: false,
             };
             dispatch(addBook(book));
             setTitle("");
@@ -37,6 +38,7 @@ export default function BookForm() {
             title: randomBook.title,
             author: randomBook.author,
             id: uuidv4(),
+            isFavorite: false,
         };
         if (findMatch(books, book)) {
             return handleAddRandomBook();

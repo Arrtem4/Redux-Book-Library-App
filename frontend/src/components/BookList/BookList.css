@@ -23,18 +23,15 @@
     background-color: #dbe4f8;
 }
 
-.book-list button {
-    background-color: #fff;
-    color: red;
-    border: 1px solid red;
-    padding: 8px 12px;
-    border-radius: 3px;
+.book-list .delete-icon {
+    color: rgba(0, 0, 0, 0.752);
+    font-size: 23px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
-.book-list button:hover {
-    background-color: #fdd;
+.book-list .delete-icon:hover {
+    color: rgb(204, 7, 7);
 }
 
 .book-list .highlight {
@@ -52,10 +49,26 @@
 }
 
 .book-list .star-icon {
-    width: 24px;
-    height: 24px;
-    margin: 0 20px;
+    transform: translateY(2px);
+    font-size: 23px;
+    margin: 0 15px;
     cursor: pointer;
-    transition: color 0.3s ease;
-    color: #fca510;
+    transition: color 0.2s ease;
+    color: #707070;
+}
+
+.book-list .star-icon.fill {
+    font-size: 23px;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    color: #ffa200;
+}
+
+.book-list .star-icon:hover {
+    color: #ffa200;
+}
+
+.book-list .star-icon.fill:hover {
+    color: #707070;
 }

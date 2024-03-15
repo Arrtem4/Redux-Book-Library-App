@@ -5,10 +5,12 @@ import {
     BsFillTrash3Fill,
 } from "react-icons/bs";
 import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
+import { selectTitle } from "../../redux/slices/filterSlice";
 import "./BookList.css";
 
 export default function BookList() {
     const books = useSelector((state) => state.books);
+    const titleFilter = useSelector(selectTitle);
     const dispatch = useDispatch();
     const handleDeleteBook = (id) => {
         dispatch(deleteBook(id));
@@ -17,13 +19,16 @@ export default function BookList() {
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
     };
+    const filteredBooks = books.filter((book) => {
+        return book.title.toLowerCase().includes(titleFilter.toLowerCase());
+    });
 
     return (
         <section className="app-block book-list">
             <h2>Book list</h2>
-            {books.length ? (
+            {filteredBooks.length ? (
                 <ul>
-                    {books.map((book, i) => (
+                    {filteredBooks.map((book, i) => (
                         <li key={book.id}>
                             <div className="book-info">
                                 {++i}. {book.title} <i>by</i>{" "}

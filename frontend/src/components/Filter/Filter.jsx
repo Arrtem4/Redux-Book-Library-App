@@ -1,9 +1,12 @@
+import { BsToggle2Off, BsToggle2On } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setTitle,
     setAuthor,
+    setOnlyFavoriteFilter,
     selectTitle,
     selectAuthor,
+    selectOnlyFavoriteFilter,
     resetFilters,
 } from "../../redux/slices/filterSlice";
 import "./Filter.css";
@@ -11,6 +14,7 @@ export default function Filter() {
     const dispatch = useDispatch();
     const titleFilter = useSelector(selectTitle);
     const authorFilter = useSelector(selectAuthor);
+    const onlyFavoriteFilter = useSelector(selectOnlyFavoriteFilter);
 
     const handleTitleChange = (e) => {
         dispatch(setTitle(e.target.value));
@@ -21,6 +25,9 @@ export default function Filter() {
 
     const handleResetFilters = () => {
         dispatch(resetFilters());
+    };
+    const handleOnlyFavoriteFilterChange = () => {
+        dispatch(setOnlyFavoriteFilter());
     };
 
     return (
@@ -41,6 +48,18 @@ export default function Filter() {
                         onChange={handleAuthorChange}
                         value={authorFilter}
                     ></input>
+                </div>
+                <div className="filter-group">
+                    <div className="filter-check">
+                        <div onClick={handleOnlyFavoriteFilterChange}>
+                            {onlyFavoriteFilter ? (
+                                <BsToggle2On className="icon on" />
+                            ) : (
+                                <BsToggle2Off className="icon off" />
+                            )}
+                        </div>
+                        <div>Only favorite</div>
+                    </div>
                 </div>
                 <button type="button" onClick={handleResetFilters}>
                     Reset

@@ -9,6 +9,27 @@
     text-align: center;
 }
 
+.filter-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
+.filter-check .icon {
+    display: flex;
+    font-size: 25px;
+    align-items: center;
+}
+
+.filter-check .icon.on {
+    color: #007bff
+}
+
+.filter-check .icon.off {
+    color: #4a4a4a
+}
+
 .filter input[type='text'] {
     width: 80%;
     padding: 8px;

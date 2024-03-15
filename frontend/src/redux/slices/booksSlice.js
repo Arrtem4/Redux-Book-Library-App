@@ -11,8 +11,11 @@ const booksSlice = createSlice({
             return state.filter((book) => book.id !== action.payload);
         },
         toggleFavorite: (state, action) => {
-            const index = state.findIndex((book) => book.id === action.payload);
-            state[index].isFavorite = !state[index].isFavorite;
+            state.forEach((book) => {
+                if (book.id === action.payload) {
+                    book.isFavorite = !book.isFavorite;
+                }
+            });
         },
     },
 });

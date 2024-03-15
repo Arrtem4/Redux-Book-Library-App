@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addBook, selectBooks } from "../../redux/slices/booksSlice";
 import createBook from "../../utils/createBook";
 import booksData from "../../data/books.json";
+import findMatch from "../../utils/findMatch";
 import "./BookForm.css";
 
 export default function BookForm() {
@@ -10,12 +11,6 @@ export default function BookForm() {
     const [author, setAuthor] = useState("");
     const books = useSelector(selectBooks);
     const dispatch = useDispatch();
-
-    const findMatch = (arr, obj) => {
-        return arr.find(
-            (book) => book.author === obj.author && book.title === obj.title
-        );
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();

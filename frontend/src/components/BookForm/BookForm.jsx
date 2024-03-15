@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addBook } from "../../redux/books/actionCreators";
+import { addBook, selectBooks } from "../../redux/slices/booksSlice";
 import createBook from "../../utils/createBook";
 import booksData from "../../data/books.json";
 import "./BookForm.css";
@@ -8,7 +8,7 @@ import "./BookForm.css";
 export default function BookForm() {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
-    const books = useSelector((state) => state.books);
+    const books = useSelector(selectBooks);
     const dispatch = useDispatch();
 
     const findMatch = (arr, obj) => {

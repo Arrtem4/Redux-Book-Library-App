@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FaSpinner } from "react-icons/fa";
 import { setError } from "../../redux/slices/errorSlice";
-import { addBook, fetchBook, selectBooks } from "../../redux/slices/booksSlice";
+import {
+    addBook,
+    fetchBook,
+    selectBooks,
+    selectIsLoadingViaAPI,
+} from "../../redux/slices/booksSlice";
 import createBook from "../../utils/createBook";
 import booksData from "../../data/books.json";
 import findMatch from "../../utils/findMatch";
 
 import "./BookForm.css";
-
 export default function BookForm() {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const books = useSelector(selectBooks);
+    const IsLoadingViaAPI = useSelector(selectIsLoadingViaAPI);
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
@@ -38,7 +44,7 @@ export default function BookForm() {
     };
 
     const handleAddRandomBookViaAPI = () => {
-        dispatch(fetchBook("http://localhost:4000/random-book-delayed"));
+        dispatch(fetchBook("http://localhost:4000/random-book"));
     };
 
     return (
@@ -67,8 +73,21 @@ export default function BookForm() {
                 <button type="button" onClick={handleAddRandomBook}>
                     Add random
                 </button>
-                <button type="button" onClick={handleAddRandomBookViaAPI}>
-                    Add random via API
+
+                <button
+                    style={{ minWidth: "145px" }}
+                    type="button"
+                    disabled={IsLoadingViaAPI}
+                    onClick={handleAddRandomBookViaAPI}
+                >
+                    {IsLoadingViaAPI ? (
+                        <>
+                            <span>Loading book...</span>
+                            <FaSpinner className="spinner" />
+                        </>
+                    ) : (
+                        <>Add random via API</>
+                    )}
                 </button>
             </form>
         </section>

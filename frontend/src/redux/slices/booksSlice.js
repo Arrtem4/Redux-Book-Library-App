@@ -10,7 +10,7 @@ export const fetchBook = createAsyncThunk(
         try {
             const res = await axios.get(url);
             if (res.data.title && res.data.author) {
-                const state = getState().books;
+                const state = getState().books.books;
                 if (findMatch(state, res.data)) {
                     throw new Error("Book already exists");
                 }
@@ -27,32 +27,43 @@ export const fetchBook = createAsyncThunk(
 
 const booksSlice = createSlice({
     name: "books",
-    initialState: [],
+    initialState: {
+        books: [],
+        isLoadingViaAPI: false,
+    },
     reducers: {
         addBook: (state, action) => {
-            state.push(action.payload);
+            state.books.push(action.payload);
         },
         deleteBook: (state, action) => {
-            return state.filter((book) => book.id !== action.payload);
+            state.books = state.books.filter(
+                (book) => book.id !== action.payload
+            );
         },
         toggleFavorite: (state, action) => {
-            state.forEach((book) => {
+            state.books.forEach((book) => {
                 if (book.id === action.payload) {
                     book.isFavorite = !book.isFavorite;
                 }
             });
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchBook.fulfilled, (state, action) => {
-            state.push(action.payload);
-        });
-        builder.addCase(fetchBook.rejected, (state, action) => {
+    extraReducers: {
+        [fetchBook.pending]: (state) => {
+            state.isLoadingViaAPI = true;
+        },
+        [fetchBook.fulfilled]: (state, action) => {
+            state.books.push(action.payload);
+            state.isLoadingViaAPI = false;
+        },
+        [fetchBook.rejected]: (state, action) => {
             console.log(action.error);
-        });
+            state.isLoadingViaAPI = false;
+        },
     },
 });
 
 export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
-export const selectBooks = (state) => state.books;
+export const selectBooks = (state) => state.books.books;
+export const selectIsLoadingViaAPI = (state) => state.books.isLoadingViaAPI;
 export default booksSlice.reducer;

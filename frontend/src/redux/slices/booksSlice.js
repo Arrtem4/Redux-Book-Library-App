@@ -1,17 +1,29 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import createBook from "../../utils/createBook";
+import { setError } from "./errorSlice";
+import findMatch from "../../utils/findMatch";
 
-export const fetchBook = createAsyncThunk("books/fetchBook", async () => {
-    try {
-        const res = await axios.get("http://localhost:4000/random-book");
-        if (res.data.title && res.data.author) {
-            return createBook(res.data, "random API");
-        } else throw new Error("incorrect data in API");
-    } catch (error) {
-        console.log(error);
+export const fetchBook = createAsyncThunk(
+    "books/fetchBook",
+    async (url, { dispatch, getState }) => {
+        try {
+            const res = await axios.get(url);
+            if (res.data.title && res.data.author) {
+                const state = getState().books;
+                if (findMatch(state, res.data)) {
+                    throw new Error("Book already exists");
+                }
+                return createBook(res.data, "random API");
+            } else {
+                throw new Error("incorrect data in API");
+            }
+        } catch (error) {
+            dispatch(setError(error.message));
+            throw error;
+        }
     }
-});
+);
 
 const booksSlice = createSlice({
     name: "books",

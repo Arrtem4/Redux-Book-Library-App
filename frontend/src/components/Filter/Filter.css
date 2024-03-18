@@ -14,12 +14,14 @@
     align-items: center;
     justify-content: center;
     gap: 7px;
+    user-select: none;
 }
 
 .filter-check .icon {
     display: flex;
     font-size: 25px;
     align-items: center;
+    cursor: pointer;
 }
 
 .filter-check .icon.on {

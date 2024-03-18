@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { addBook, selectBooks, fetchBook } from "../../redux/slices/booksSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setError } from "../../redux/slices/errorSlice";
+import { addBook, fetchBook, selectBooks } from "../../redux/slices/booksSlice";
 import createBook from "../../utils/createBook";
 import booksData from "../../data/books.json";
 import findMatch from "../../utils/findMatch";
+
 import "./BookForm.css";
 
 export default function BookForm() {
@@ -15,25 +16,29 @@ export default function BookForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (title && author && !findMatch(books, { title, author })) {
-            const book = createBook({ title, author }, "manual");
-            dispatch(addBook(book));
-            setTitle("");
-            setAuthor("");
+        if (!title || !author) {
+            return dispatch(setError("Title and author are required"));
         }
+        if (findMatch(books, { title, author })) {
+            return dispatch(setError("Book already exists"));
+        }
+        const book = createBook({ title, author }, "manual");
+        dispatch(addBook(book));
+        setTitle("");
+        setAuthor("");
     };
     const handleAddRandomBook = () => {
         const randomIndex = Math.floor(Math.random() * booksData.length);
         const randomBook = booksData[randomIndex];
-        const book = createBook(randomBook, "random");
-        if (findMatch(books, book)) {
-            return handleAddRandomBook();
+        if (findMatch(books, randomBook)) {
+            return dispatch(setError("Book already exists"));
         }
+        const book = createBook(randomBook, "random");
         dispatch(addBook(book));
     };
 
     const handleAddRandomBookViaAPI = () => {
-        dispatch(fetchBook());
+        dispatch(fetchBook("http://localhost:4000/random-book"));
     };
 
     return (

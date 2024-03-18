@@ -38,7 +38,7 @@ export default function BookForm() {
     };
 
     const handleAddRandomBookViaAPI = () => {
-        dispatch(fetchBook("http://localhost:4000/random-book"));
+        dispatch(fetchBook("http://localhost:4000/random-book-delayed"));
     };
 
     return (

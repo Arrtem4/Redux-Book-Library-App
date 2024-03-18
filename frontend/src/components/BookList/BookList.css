@@ -43,6 +43,11 @@
     text-align: left;
 }
 
+.book-list .book-info.source {
+    color: #828282;
+    font-size: 12px;
+}
+
 .book-list .book-actions {
     display: flex;
     align-items: center;

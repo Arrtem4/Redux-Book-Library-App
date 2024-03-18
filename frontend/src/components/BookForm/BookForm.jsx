@@ -16,7 +16,7 @@ export default function BookForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (title && author && !findMatch(books, { title, author })) {
-            const book = createBook({ title, author });
+            const book = createBook({ title, author }, "manual");
             dispatch(addBook(book));
             setTitle("");
             setAuthor("");
@@ -25,7 +25,7 @@ export default function BookForm() {
     const handleAddRandomBook = () => {
         const randomIndex = Math.floor(Math.random() * booksData.length);
         const randomBook = booksData[randomIndex];
-        const book = createBook(randomBook);
+        const book = createBook(randomBook, "random");
         if (findMatch(books, book)) {
             return handleAddRandomBook();
         }
@@ -35,7 +35,7 @@ export default function BookForm() {
         try {
             const res = await axios.get("http://localhost:4000/random-book");
             if (!findMatch(books, res.data)) {
-                const book = createBook(res.data);
+                const book = createBook(res.data, "random API");
                 dispatch(addBook(book));
             } else {
                 handleAddRandomBookViaAPI();

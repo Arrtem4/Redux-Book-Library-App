@@ -63,7 +63,10 @@ export default function BookList() {
                                 <i>by</i>{" "}
                                 <strong>
                                     {highlightMatch(book.author, authorFilter)}
-                                </strong>
+                                </strong>{" "}
+                                <span className="book-info source">
+                                    {"  "}({book.source})
+                                </span>
                             </div>
                             <div className="book-actions">
                                 <span

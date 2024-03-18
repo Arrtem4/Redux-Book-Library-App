@@ -34,11 +34,17 @@ const booksSlice = createSlice({
     reducers: {
         addBook: (state, action) => {
             state.books.push(action.payload);
+            localStorage.setItem("books", JSON.stringify(state.books));
         },
         deleteBook: (state, action) => {
             state.books = state.books.filter(
                 (book) => book.id !== action.payload
             );
+            localStorage.setItem("books", JSON.stringify(state.books));
+        },
+        deleteAllBooks: (state, action) => {
+            state.books = [];
+            localStorage.clear();
         },
         toggleFavorite: (state, action) => {
             state.books.forEach((book) => {
@@ -46,6 +52,12 @@ const booksSlice = createSlice({
                     book.isFavorite = !book.isFavorite;
                 }
             });
+            localStorage.setItem("books", JSON.stringify(state.books));
+        },
+        getBooksFromLocalStorage: (state) => {
+            if (localStorage.getItem("books")) {
+                state.books = JSON.parse(localStorage.getItem("books"));
+            }
         },
     },
     extraReducers: {
@@ -63,7 +75,13 @@ const booksSlice = createSlice({
     },
 });
 
-export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
+export const {
+    addBook,
+    deleteBook,
+    toggleFavorite,
+    getBooksFromLocalStorage,
+    deleteAllBooks,
+} = booksSlice.actions;
 export const selectBooks = (state) => state.books.books;
 export const selectIsLoadingViaAPI = (state) => state.books.isLoadingViaAPI;
 export default booksSlice.reducer;

@@ -8,6 +8,7 @@ import {
     deleteBook,
     toggleFavorite,
     selectBooks,
+    deleteAllBooks,
 } from "../../redux/slices/booksSlice";
 import {
     selectTitle,
@@ -53,7 +54,15 @@ export default function BookList() {
 
     return (
         <section className="app-block book-list">
-            <h2>Book list</h2>
+            <div className="header">
+                <h2>Book list</h2>
+                {books.length >= 3 && (
+                    <button onClick={() => dispatch(deleteAllBooks())}>
+                        Clear list
+                        <BsFillTrash3Fill className="icon" />
+                    </button>
+                )}
+            </div>
             {filteredBooks.length ? (
                 <ul>
                     {filteredBooks?.map((book, i) => (

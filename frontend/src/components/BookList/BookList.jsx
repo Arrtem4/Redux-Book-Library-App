@@ -31,8 +31,8 @@ export default function BookList() {
     };
     const filteredBooks = books.filter((book) => {
         return (
-            book.title.toLowerCase().includes(titleFilter.toLowerCase()) &&
-            book.author.toLowerCase().includes(authorFilter.toLowerCase()) &&
+            book?.title.toLowerCase().includes(titleFilter.toLowerCase()) &&
+            book?.author.toLowerCase().includes(authorFilter.toLowerCase()) &&
             (onlyFavoriteFilter ? book.isFavorite : true)
         );
     });
@@ -56,7 +56,7 @@ export default function BookList() {
             <h2>Book list</h2>
             {filteredBooks.length ? (
                 <ul>
-                    {filteredBooks.map((book, i) => (
+                    {filteredBooks?.map((book, i) => (
                         <li key={book.id}>
                             <div className="book-info">
                                 {++i}. {highlightMatch(book.title, titleFilter)}{" "}

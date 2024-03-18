@@ -1,13 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import createBook from "../../utils/createBook";
-import findMatch from "../../utils/findMatch";
 
-const initialState = [];
+export const fetchBook = createAsyncThunk("books/fetchBook", async () => {
+    try {
+        const res = await axios.get("http://localhost:4000/random-book");
+        if (res.data.title && res.data.author) {
+            return createBook(res.data, "random API");
+        } else throw new Error("incorrect data in API");
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 const booksSlice = createSlice({
     name: "books",
-    initialState,
+    initialState: [],
     reducers: {
         addBook: (state, action) => {
             state.push(action.payload);
@@ -23,22 +31,16 @@ const booksSlice = createSlice({
             });
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(fetchBook.fulfilled, (state, action) => {
+            state.push(action.payload);
+        });
+        builder.addCase(fetchBook.rejected, (state, action) => {
+            console.log(action.error);
+        });
+    },
 });
 
 export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
-export const thunkFunction = async (dispatch, getState) => {
-    try {
-        const res = await axios.get("http://localhost:4000/random-book");
-        console.log(res.data);
-        if (!findMatch(initialState, res.data)) {
-            const book = createBook(res.data, "random API");
-            dispatch(addBook(book));
-        } else {
-            thunkFunction();
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
 export const selectBooks = (state) => state.books;
 export default booksSlice.reducer;

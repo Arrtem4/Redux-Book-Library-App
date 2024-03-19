@@ -4,11 +4,18 @@ import createBook from "../../utils/createBook";
 import { setError } from "./errorSlice";
 import findMatch from "../../utils/findMatch";
 
+const config = {
+    headers: {
+        "Access-Control-Allow-Origin": "https://arrtem4.github.io",
+        "Access-Control-Allow-Credentials": true,
+    },
+};
+
 export const fetchBook = createAsyncThunk(
     "books/fetchBook",
     async (url, { dispatch, getState }) => {
         try {
-            const res = await axios.get(url);
+            const res = await axios.get(url, config);
             if (res.data.title && res.data.author) {
                 const state = getState().books.books;
                 if (findMatch(state, res.data)) {

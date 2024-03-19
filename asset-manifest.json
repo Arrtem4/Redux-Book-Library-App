@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Redux-Book-Library-App/static/css/main.cfcd46aa.css",
-    "main.js": "/Redux-Book-Library-App/static/js/main.f5b2109e.js",
+    "main.js": "/Redux-Book-Library-App/static/js/main.7e6db5eb.js",
     "index.html": "/Redux-Book-Library-App/index.html",
     "main.cfcd46aa.css.map": "/Redux-Book-Library-App/static/css/main.cfcd46aa.css.map",
-    "main.f5b2109e.js.map": "/Redux-Book-Library-App/static/js/main.f5b2109e.js.map"
+    "main.7e6db5eb.js.map": "/Redux-Book-Library-App/static/js/main.7e6db5eb.js.map"
   },
   "entrypoints": [
     "static/css/main.cfcd46aa.css",
-    "static/js/main.f5b2109e.js"
+    "static/js/main.7e6db5eb.js"
   ]
 }

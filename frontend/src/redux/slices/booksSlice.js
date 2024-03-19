@@ -68,18 +68,19 @@ const booksSlice = createSlice({
             }
         },
     },
-    extraReducers: {
-        [fetchBook.pending]: (state) => {
-            state.isLoadingViaAPI = true;
-        },
-        [fetchBook.fulfilled]: (state, action) => {
-            state.books.push(action.payload);
-            state.isLoadingViaAPI = false;
-        },
-        [fetchBook.rejected]: (state, action) => {
-            console.log(action.error);
-            state.isLoadingViaAPI = false;
-        },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchBook.pending, (state) => {
+                state.isLoadingViaAPI = true;
+            })
+            .addCase(fetchBook.fulfilled, (state, action) => {
+                state.books.push(action.payload);
+                state.isLoadingViaAPI = false;
+            })
+            .addCase(fetchBook.rejected, (state, action) => {
+                console.log(action.error);
+                state.isLoadingViaAPI = false;
+            });
     },
 });
 

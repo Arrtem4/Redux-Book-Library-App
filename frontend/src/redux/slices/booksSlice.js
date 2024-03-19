@@ -5,13 +5,10 @@ import { setError } from "./errorSlice";
 import findMatch from "../../utils/findMatch";
 
 const config = {
-    withCredentials: "include",
     headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
         "Access-Control-Allow-Credentials": "include",
         "Access-Control-Allow-Origin": "https://arrtem4.github.io",
-        SameSite: "Lax",
     },
 };
 

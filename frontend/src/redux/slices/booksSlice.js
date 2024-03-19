@@ -7,7 +7,7 @@ import findMatch from "../../utils/findMatch";
 const config = {
     headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": "include",
+        "Access-Control-Allow-Credentials": true,
         "Access-Control-Allow-Origin": "https://arrtem4.github.io",
     },
 };

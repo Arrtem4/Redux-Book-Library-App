@@ -44,7 +44,9 @@ export default function BookForm() {
     };
 
     const handleAddRandomBookViaAPI = () => {
-        dispatch(fetchBook("http://localhost:4000/random-book"));
+        dispatch(
+            fetchBook("https://whatwiththereviews.onrender.com/api/random-book")
+        );
     };
 
     return (
